@@ -1,0 +1,11 @@
+version: '3'
+services:
+  frontend:
+    build: ./Frontend/Frontend
+    ports:
+      - "3000:3000"
+
+  backend:
+    build: ./Assignment-4/expressjs-and-rest-Alwalchaitanya45
+    ports:
+      - "5000:5000"
