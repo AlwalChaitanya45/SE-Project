@@ -6,6 +6,6 @@ services:
       - "3000:3000"
 
   backend:
-    build: ./Assignment-4/expressjs-and-rest-Alwalchaitanya45
+    build: ./Assignment-4/expressjs-and-rest-AlwalChaitanya45
     ports:
       - "5000:5000"
