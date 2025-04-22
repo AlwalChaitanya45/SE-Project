@@ -16,7 +16,7 @@ services:
       - "3000:3000"
     restart: always
     environment:
-      - REACT_APP_API_URL=http://localhost:5000  # Backend service URL for frontend
+      - REACT_APP_API_URL=http://13.53.214.93:5000  # Backend service URL for frontend
     depends_on:
       - backend  # Ensure backend is up before frontend starts
     networks:
