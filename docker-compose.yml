@@ -1,11 +1,27 @@
-version: '3'
-services:
-  frontend:
-    build: ./Frontend/Frontend
-    ports:
-      - "3000:3000"
 
+services:
   backend:
-    build: ./Assignment-4/expressjs-and-rest-AlwalChaitanya45
+    build: ./Assignment-4/expressjs-and-rest-AlwalChaitanya45  # Path to your backend folder with Dockerfile
+    container_name: backend
     ports:
       - "5000:5000"
+    restart: always
+    networks:
+      - app-network
+
+  frontend:
+    build: ./Frontend/Frontend  # Path to your frontend folder with Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    restart: always
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000  # Backend service URL for frontend
+    depends_on:
+      - backend  # Ensure backend is up before frontend starts
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

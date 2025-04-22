@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function App() {
   const [profiles, setProfiles] = useState([]);
   const [formData, setFormData] = useState({
@@ -13,7 +15,7 @@ function App() {
 
   const fetchProfiles = async () => {
     try {
-      const res = await axios.get('/api/profiles');
+      const res = await axios.get(`${API_URL}/api/profiles`);
       setProfiles(res.data);
     } catch (err) {
       console.error('Error fetching profiles:', err);
@@ -32,13 +34,13 @@ function App() {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`/api/profiles/${editingId}`, {
+        await axios.put(`${API_URL}/api/profiles/${editingId}`, {
           ...formData,
           likes: profiles.find(p => p.id === editingId)?.likes || 0
         });
         setEditingId(null);
       } else {
-        await axios.post('/api/profiles', formData);
+        await axios.post(`${API_URL}/api/profiles`, formData);
       }
       setFormData({ name: '', favoriteColor: '', favoriteFood: '' });
       fetchProfiles();
@@ -48,12 +50,12 @@ function App() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`/api/profiles/${id}`);
+    await axios.delete(`${API_URL}/api/profiles/${id}`);
     fetchProfiles();
   };
 
   const handleLike = async (id) => {
-    await axios.patch(`/api/profiles/${id}/likes`);
+    await axios.patch(`${API_URL}/api/profiles/${id}/likes`);
     fetchProfiles();
   };
 

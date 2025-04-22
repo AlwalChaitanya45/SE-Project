@@ -1,24 +1,20 @@
-# Use official Node image
-FROM node:18
+# Step 1: Use an official Node.js runtime as the base image
+FROM node:14
 
-# Set working directory
+# Step 2: Set the working directory in the container
 WORKDIR /app
 
-# Install dependencies
+# Step 3: Copy package.json and package-lock.json to install dependencies
 COPY package*.json ./
+
+# Step 4: Install dependencies
 RUN npm install
 
-# Copy the rest of the code
+# Step 5: Copy the entire project folder to the container
 COPY . .
 
-# Build the app
-RUN npm run build
-
-# Install serve to serve the build folder
-RUN npm install -g serve
-
-# Expose the port for frontend
+# Step 6: Expose the port the app will run on
 EXPOSE 3000
 
-# Start the React app with serve
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Step 7: Start the app
+CMD ["npm", "start"]

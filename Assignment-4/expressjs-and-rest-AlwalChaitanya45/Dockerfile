@@ -1,18 +1,18 @@
-# Use official Node image
-FROM node:18
+FROM node:14
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Copy only package files first for better layer caching
 COPY package*.json ./
+
+# Install dependencies inside the container
 RUN npm install
 
-# Copy the backend code
+# Copy the rest of your application code
 COPY . .
 
-# Expose the port for backend
+# Expose the port your backend listens on (if needed)
 EXPOSE 5000
 
-# Start the Express server
-CMD ["node", "index.js"]
+# Start the server
+CMD ["npm", "start"]
