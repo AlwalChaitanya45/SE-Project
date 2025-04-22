@@ -1,20 +1,20 @@
-# Step 1: Use an official Node.js runtime as the base image
-FROM node:14
+# Use a lighter node image for faster builds
+FROM node:18-alpine
 
-# Step 2: Set the working directory in the container
+# Set working directory in the container
 WORKDIR /app
 
-# Step 3: Copy package.json and package-lock.json to install dependencies
+# Copy only package.json and package-lock.json to leverage Docker caching
 COPY package*.json ./
 
-# Step 4: Install dependencies
-RUN npm install
+# Install dependencies only when package.json or package-lock.json changes
+RUN npm install --legacy-peer-deps
 
-# Step 5: Copy the entire project folder to the container
+# Copy the rest of your application code
 COPY . .
 
-# Step 6: Expose the port the app will run on
+# Expose the port your app will run on
 EXPOSE 3000
 
-# Step 7: Start the app
+# Define the default command
 CMD ["npm", "start"]

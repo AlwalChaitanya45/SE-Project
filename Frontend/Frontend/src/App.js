@@ -16,7 +16,14 @@ function App() {
   const fetchProfiles = async () => {
     try {
       const res = await axios.get(`${API_URL}/api/profiles`);
-      setProfiles(res.data);
+      console.log('Profiles response:', res.data);  // Debug log
+      // Check if res.data is an array before setting it
+      if (Array.isArray(res.data)) {
+        setProfiles(res.data);
+      } else {
+        console.error('Unexpected data format:', res.data);
+        setProfiles([]);  // fallback empty array to avoid map errors
+      }
     } catch (err) {
       console.error('Error fetching profiles:', err);
     }
